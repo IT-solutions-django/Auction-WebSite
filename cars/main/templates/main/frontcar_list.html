@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список автомобилей</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a; /* Темный фон страницы */
+            color: #ffffff; /* Белый цвет текста */
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #2a2a2a; /* Затемненный фон контейнера */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .car-item {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin: 15px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s;
+            background-color: #333; /* Затемненный фон для карточек автомобилей */
+        }
+        
+        .car-item:hover {
+            transform: scale(1.02);
+        }
+        
+        .car-info {
+            flex: 1;
+        }
+        
+        .car-img {
+            max-width: 100px;
+            height: auto;
+            margin-left: 20px;
+            border-radius: 4px;
+        }
+        
+        .video-slider {
+            margin: 20px 0;
+        }
+        
+        .video-item {
+            margin: 10px;
+            background-color: #2a2a2a; /* Затемненный фон для видео */
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .pagination a {
+            margin: 0 5px;
+            padding: 8px 12px;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            color: #007bff;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+        
+        .pagination a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .slick-arrow {
+            background: transparent;
+            border: none;
+            color: white; /* Цвет стрелок */
+            font-size: 30px; /* Размер стрелок */
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        .slick-prev {
+            left: 10px; 
+        }
+
+        .slick-next {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Список автомобилей</h1>
+        
+        <form method="get" style="text-align: center; margin-bottom: 20px;">
+            {{ form.as_p }}
+            <button type="submit" style="padding: 10px 15px; border: none; background-color: #007bff; color: white; border-radius: 4px;">Фильтровать</button>
+        </form>
+
+        <div class="car-list">
+            {% for car in object_list %}
+                <div class="car-item">
+                    <div class="car-info">
+                        <h2>{{ car.make }} {{ car.model }}</h2>
+                        <p>Год: {{ car.year }} - Цена: {{ car.finish }} - Мощность: {{ car.pw }} л.с. Пробег: {{car.mileage}}км Объем двигателя: {{car.eng_volume}}cm^3</p>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Нет автомобилей</p>
+            {% endfor %}
+        </div>
+
+        <div class="video-slider">
+            <h2>Видео</h2>
+            {% for video in playlist.videos.all %}
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/{{ video.youtube_id }}" frameborder="0" allowfullscreen></iframe>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="pagination">
+           
+            {% if previous %}
+                <a href="{% url 'catalog' page=previous %}?{{ request.GET.urlencode }}&page={{ previous }}">Предыдущая страница</a>
+            {% endif %}
+            {% if next %}
+                <a href="{% url 'catalog' page=next %}?{{ request.GET.urlencode }}&page={{ next }}">{{ 'Следующая страница' }}</a>
+            {% endif %}
+            
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static 'main/js/filter.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $('.video-slider').slick({
+                infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                prevArrow: '<button type="button" class="slick-prev">&lt;</button>',
+                nextArrow: '<button type="button" class="slick-next">&gt;</button>',
+                responsive: [{
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                }]
+            });
+        });
+    </script>
+</body>
+</html>

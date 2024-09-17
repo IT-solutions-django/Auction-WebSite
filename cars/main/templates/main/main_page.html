@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <style>
+        body {
+            background-color: #1a1a1a; /* Темный фон страницы */
+            color: #ffffff; /* Белый цвет текста */
+            font-family: Arial, sans-serif;
+        }
+
+        .cars {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Отступ между автомобилями */
+        }
+
+        .car-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #2a2a2a; /* Затемненный фон для контейнеров с автомобилями */
+            border-radius: 5px;
+            width: calc(20% - 20px); /* Ширина на 20% с отступами */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .video-item {
+            margin: 10px;
+            background-color: #2a2a2a; /* Затемненный фон для видео */
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            position: relative; /* Для размещения стрелок */
+        }
+
+        .slick-arrow {
+            background: transparent;
+            border: none;
+            color: white; /* Цвет стрелок */
+            font-size: 30px; /* Размер стрелок */
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        .slick-prev {
+            left: 10px; /* Отступ слева */
+        }
+
+        .slick-next {
+            right: 10px; /* Отступ справа */
+        }
+
+        .slick-slide {
+            margin: 0 10px; /* Отступы между слайдами */
+        }
+
+        iframe {
+            width: 30%; /* Уменьшенная ширина для iframe */
+            height: 350px; /* Уменьшенная высота для iframe */
+            margin: 0 auto; /* Центрирование iframe */
+            display: block;
+        }
+    </style>
+    <title>{{ playlist.name }}</title>
+</head>
+<body>
+
+<div class="cars">
+    {% for cont in containers %}
+        {% if cont %}
+            <div style="flex-basis: 100%;">
+                <h3>{{ cont.name }}</h3>
+            </div>
+            {% for car in cont.cars.all %}
+                <div class="car-item">
+                    <h5>{{car.make}} {{car.model}} {{car.year}}</h5>
+                    <p><strong>{{car.final}}</strong></p>
+                    {% if car.images.all %}
+                        {% for image in car.images.all %}
+                            <img src="{{ image.image_file.url }}" style="width: 100%; height: auto;">
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+</div>
+
+<div class="container">
+    <h2>Видео</h2>
+    <div class="video-slider">
+        {% for video in playlist.videos.all %}
+            <div class="video-item">
+                
+                <iframe src="https://www.youtube.com/embed/{{ video.youtube_id }}" frameborder="0" allowfullscreen></iframe>
+                
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('.video-slider').slick({
+            infinite: true,
+            slidesToShow: 1, // Количество видео на экране
+            slidesToScroll: 1,
+            prevArrow: '<button type="button" class="slick-prev">&lt;</button>',
+            nextArrow: '<button type="button" class="slick-next">&gt;</button>',
+            responsive: [{
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1
+                }
+            }]
+        });
+    });
+</script>
+
+</body>
+</html>
