@@ -58,18 +58,6 @@
             border-radius: 4px;
         }
         
-        .video-slider {
-            margin: 20px 0;
-        }
-        
-        .video-item {
-            margin: 10px;
-            background-color: #2a2a2a; /* Затемненный фон для видео */
-            border-radius: 5px;
-            padding: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            position: relative;
-        }
         
         .pagination {
             display: flex;
@@ -135,14 +123,6 @@
             {% endfor %}
         </div>
 
-        <div class="video-slider">
-            <h2>Видео</h2>
-            {% for video in playlist.videos.all %}
-                <div class="video-item">
-                    <iframe src="https://www.youtube.com/embed/{{ video.youtube_id }}" frameborder="0" allowfullscreen></iframe>
-                </div>
-            {% endfor %}
-        </div>
 
         <div class="pagination">
            
