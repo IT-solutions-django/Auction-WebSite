@@ -16,7 +16,7 @@ def frontcar_list_view(request, page=1):
     fields = [
         "make",
         "model",
-        "privod",
+        "priv",
         "kpp",
         "color",
         "mileage_min",
