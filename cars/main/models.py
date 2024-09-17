@@ -22,4 +22,34 @@ class Currency(models.Model):
     def __str__(self):
         return f"{self.currency_name} - {self.exchange_rate} на {self.date}"
 
+"""Дальше будут модели для фильтров"""
+
+
+class YearFilter(models.Model):
+    name =  models.CharField(max_length=4,null=False,blank=False)
+    value = models.PositiveIntegerField(null=False,blank=False)
+
+    def __str__(self):
+        return self.name
+
+class PowerFilter(models.Model):
+    name = models.CharField(max_length=5,null=False,blank=False)
+    value = models.PositiveSmallIntegerField(null=False,blank=False)
+
+class VolumeFilter(models.Model):
+    name = models.CharField(max_length=5,null=False,blank=False,help_text='Указывайте объем в литрах')
+    value = models.FloatField(null=False,blank=False,help_text='Указывайте объем в см^3\n1л = 1000см^3')
+
+    def __str__(self):
+        return (f'{self.name}л -- {self.value}см^3')
+
+class MileageMinFilter(models.Model):
+    name = models.CharField(max_length=255,null=False,blank=False)
+    value = models.PositiveIntegerField(null=False,blank=False)
+
+class MileageMaxFilter(models.Model):
+    name = models.CharField(max_length=255,null=False,blank=False)
+    value = models.PositiveIntegerField(null=False,blank=False)
+
+
 
