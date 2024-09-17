@@ -32,5 +32,19 @@ services:
       - DATABASE_HOST=${DATABASE_HOST}
       - DATABASE_PORT=${DATABASE_PORT}
 
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  celery:
+    build: .
+    command: celery -A vk worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+
+ 
 volumes:
   pgdata:
