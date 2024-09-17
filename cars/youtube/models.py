@@ -3,7 +3,7 @@ from googleapiclient.discovery import build
 from django.core.exceptions import ObjectDoesNotExist
 
 
-# AIzaSyDGoDx4ioYPPHyv8bo3wzZLZf1HwenuUA8
+
 
 
 class GoogleSettings(models.Model):
