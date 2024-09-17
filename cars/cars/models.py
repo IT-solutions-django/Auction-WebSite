@@ -8,7 +8,7 @@ class CarPriv(models.Model):
     true_priv = models.CharField(max_length=30)
 
     def __str__(self):
-        return f"{self.name} {self.true_priv}"
+        return f"{self.true_priv}"
 
 
 class CarAuction(models.Model):
@@ -38,9 +38,6 @@ class CarFuel(models.Model):
 
 
 class CarBody(models.Model):
-    """Сначала хотел реализовать по аналогии через choices, но потом понял, что лучше оставить возможность
-    конечном пользователю самому добавлять какие его душе угодно варианты кузова"""
-
     name = models.CharField(max_length=30)
 
     def __str__(self):
