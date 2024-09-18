@@ -34,33 +34,11 @@ class CarFilterForm(forms.Form):
         label="Цвет",
     )
     mileage_min = forms.ChoiceField(
-        choices=[
-            ("", "Выберите"),
-            (1000, "1000km"),
-            (5000, "5000km"),
-            (10_000, "10000km"),
-            (20_000, "20000km"),
-            (50_000, "50000km"),
-            (100_000, "100000km"),
-        ],
         required=False,
         label="Пробег от",
     )
     mileage_max = forms.ChoiceField(
         required=False,
-        choices=[
-            ("", "Выберите"),
-            (30_000, "30000km"),
-            (40_000, "40000km"),
-            (50_000, "50000km"),
-            (60_000, "60000km"),
-            (70_000, "70000km"),
-            (80_000, "80000km"),
-            (100_000, "100000km"),
-            (150_000, "150000km"),
-            (200_000, "200000km"),
-            (250_000, "250000km"),
-        ],
         label="Пробег до",
     )
     power_min = forms.ChoiceField(
