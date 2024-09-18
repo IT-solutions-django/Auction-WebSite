@@ -46,7 +46,6 @@ def frontcar_list_view(request, page=1):
     data = {"filters": filters}
 
     response = requests.get(url, json=data)
-    print(data)
     if response.status_code == 200:
         result = response.json()
         cars = result.get("results", [])
